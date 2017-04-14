@@ -1,6 +1,6 @@
 {
   "name": "zmrz",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "alipay zhima real name certify",
   "main": "lib/index.js",
   "scripts": {
