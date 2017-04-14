@@ -53,9 +53,9 @@ export default class {
         }),
       }),
     }, this.options)
-    delete opts.sign_type
+    // delete opts.sign_type
     const signature = this.sign(this.obj2qs(opts))
-    opts.sign_type = this.options.sign_type
+    // opts.sign_type = this.options.sign_type
     opts.sign = signature
     console.log(opts)
 
@@ -84,14 +84,14 @@ export default class {
 
   sign(input, key = this.config.appPrivateKey) {
     return crypto
-      .createSign('RSA-SHA1')
+      .createSign('RSA-SHA256')
       .update(input, 'utf8')
       .sign(key, 'base64')
   }
 
   verify(expected, sign, key = this.config.alipayPublicKey) {
     return crypto
-      .createVerify('RSA-SHA1')
+      .createVerify('RSA-SHA256')
       .update(expected, 'utf8')
       .verify(key, sign, 'base64')
   }
