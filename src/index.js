@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import rp from 'request-promise'
 import crypto from 'crypto'
 
