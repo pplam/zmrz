@@ -54,7 +54,7 @@ export default class {
       }),
     }, this.options)
     // delete opts.sign_type
-    const signature = this.sign(this.obj2qs(opts))
+    const signature = this.sign(this.buildQs(opts))
     // opts.sign_type = this.options.sign_type
     opts.sign = signature
 
