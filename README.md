@@ -11,4 +11,4 @@ easy alipay zhima certify
 ## Configure
 ## Contribute
 
-  Good features and suggestions are welcome. Code here: https://github.com/pplam/wechat-sign.
+  Good features and suggestions are welcome. Code here: https://github.com/pplam/zmrz.
