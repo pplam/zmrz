@@ -53,9 +53,9 @@ export default class {
         }),
       }),
     }, this.options)
-    delete opts.sign_type
+    // delete opts.sign_type
     const signature = this.sign(this.obj2qs(opts))
-    opts.sign_type = this.options.sign_type
+    // opts.sign_type = this.options.sign_type
     opts.sign = signature
     console.log(opts)
 
@@ -108,7 +108,7 @@ export default class {
     return Object
       .entries(sorted)
       .filter(([, value]) => ![null, ''].includes(value))
-      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .map(([key, value]) => `${key}=${value}`)// encodeURIComponent(value)}`)
       .join('&')
   }
 }
