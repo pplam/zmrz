@@ -1,6 +1,7 @@
 import 'babel-polyfill'
 import rp from 'request-promise'
 import crypto from 'crypto'
+import qs from 'querystring'
 
 function timestampISO() {
   return new Date()
@@ -54,9 +55,10 @@ export default class {
       }),
     }, this.options)
 
-    const qs = this.buildQs(opts)
-    const signature = this.sign(qs)
-    const url = `${this.config.url}?${qs}&sign=${signature}`
+    const signature = this.sign(this.buildQs(opts))
+    opts.sign = signature
+
+    const url = `${this.config.url}?${qs.stringify(opts)}`
 
     return await rp(url)
   }
@@ -70,10 +72,11 @@ export default class {
         biz_no: bizNO,
       }),
     }, this.options)
-    const qs = this.buildQs(opts)
-    const signature = this.sign(qs)
 
-    return `${this.config.url}?${qs}&sign=${signature}`
+    const signature = this.sign(this.buildQs(opts))
+    opts.sign = signature
+
+    return `${this.config.url}?${qs.stringify(opts)}`
   }
 
   sign(input, key = this.config.appPrivateKey) {
