@@ -53,17 +53,12 @@ export default class {
         }),
       }),
     }, this.options)
-    // delete opts.sign_type
-    const signature = this.sign(this.buildQs(opts))
-    // opts.sign_type = this.options.sign_type
-    opts.sign = signature
 
-    return await rp({
-      method: 'POST',
-      uri: this.config.url,
-      body: opts,
-      json: true,
-    })
+    const qs = this.buildQs(opts)
+    const signature = this.sign(qs)
+    const url = `${this.config.url}?${qs}&sign=${signature}`
+
+    return await rp(url)
   }
 
   getUrl(bizNO, returnUrl) {
@@ -75,7 +70,7 @@ export default class {
         biz_no: bizNO,
       }),
     }, this.options)
-    const qs = this.obj2qs(opts)
+    const qs = this.buildQs(opts)
     const signature = this.sign(qs)
 
     return `${this.config.url}?${qs}&sign=${signature}`
