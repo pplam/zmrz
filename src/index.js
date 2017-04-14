@@ -57,7 +57,6 @@ export default class {
     const signature = this.sign(this.obj2qs(opts))
     // opts.sign_type = this.options.sign_type
     opts.sign = signature
-    console.log(opts)
 
     return await rp({
       method: 'POST',
@@ -86,17 +85,17 @@ export default class {
     return crypto
       .createSign('RSA-SHA256')
       .update(input, 'utf8')
-      .sign(key, 'base64')
+      .sign(key.toString(), 'base64')
   }
 
   verify(expected, sign, key = this.config.alipayPublicKey) {
     return crypto
       .createVerify('RSA-SHA256')
       .update(expected, 'utf8')
-      .verify(key, sign, 'base64')
+      .verify(key.toString(), sign, 'base64')
   }
 
-  obj2qs(obj) {
+  buildQs(obj) {
     const sorted = Object
       .keys(obj)
       .sort()
@@ -107,8 +106,11 @@ export default class {
 
     return Object
       .entries(sorted)
-      .filter(([, value]) => ![null, ''].includes(value))
-      .map(([key, value]) => `${key}=${value}`)// encodeURIComponent(value)}`)
+      .filter(([, value]) => ![null, undefined, ''].includes(value))
+      .map(([key, value]) => {
+        if (typeof value === 'object') return `${key}=${JSON.stringify(value)}`
+        return `${key}=${value}`
+      })
       .join('&')
   }
 }
